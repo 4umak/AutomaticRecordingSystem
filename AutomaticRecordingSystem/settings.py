@@ -16,7 +16,6 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ SECRET_KEY = '@sw6v(d#lv6%x@-vf@2ki9#_kq+phs))&m4@9*=zpw&36re$j+'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -77,28 +75,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'AutomaticRecordingSystem.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(PROJECT_DIR, 'db.sqlite3'),
-         'ENGINE': 'django.db.backends.mysql',
-         'NAME': 'auto_record',
-         'USER': 'root',
-         'PASSWORD': 'root',
-         'HOST': 'localhost',
-         'PORT': '3306',
-         'TEST': {
-          'CHARSET': 'utf8',
-          'COLLATION': 'utf8_general_ci',
-         }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_DIR, 'db.sqlite3'),
+        # "'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'auto_record',
+        # 'USER': 'root',
+        # 'PASSWORD': 'root',
+        # 'HOST': 'localhost',
+        # 'PORT': '3306',
+        # 'TEST': {
+        # 'CHARSET': 'utf8',
+        # 'COLLATION': 'utf8_general_ci',
+        # }"""
 
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -118,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -131,7 +126,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

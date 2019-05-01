@@ -1,5 +1,9 @@
+import smtplib
+import ssl
+
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
@@ -43,6 +47,7 @@ class TeacherListView(ListView):
             work = record.work_id
             student = record.student_id
             record.status = 'CONFIRMED'
+            sendEmail(student, work)
             record.save()
 
             other_record_on_theme = Record.objects.all().filter(work_id=work)
@@ -78,7 +83,6 @@ class TeacherListView(ListView):
                     o_stud.status = 'WAIT'
                     o_stud.save()
 
-
         return Teacher.objects.all()
 
 
@@ -88,16 +92,39 @@ def createTheme(request):
         form = NewTheme(request.POST)
         if form.is_valid():
             teacher = Teacher.objects.get(pk=request.session['user_id'])
-            offer = TopicOffer.objects.all().filter(teacher=teacher)[0]
-            work_name = request.POST.get('work_name', '')
-            english_work_name = request.POST.get('english_work_name', '')
-            note = request.POST.get('note', '')
-            previous_version = form.cleaned_data.get('previous_version', '')
-            branch = form.cleaned_data.get('branch', '')
-            feedback_obj = WriteWork.objects.create(work_name=work_name, english_work_name=english_work_name, note=note, teacher_offer=offer, previous_version=previous_version)
-            feedback_obj.branch.set(branch)
-
-            return HttpResponseRedirect('/teacher/')
+            specialty = form.cleaned_data.get('specialty', '')
+            year = request.POST.get('year', '')
+            offer = TopicOffer.objects.all().filter(teacher=teacher,
+                                                    specialty__specialty__specialty_name=specialty.specialty.specialty.specialty_name,
+                                                    specialty__year_of_entry=year)[0]
+            if offer and offer.fact_count_of_themes < offer.count_of_themes:
+                offer.fact_count_of_themes += 1
+                offer.save()
+                work_name = request.POST.get('work_name', '')
+                english_work_name = request.POST.get('english_work_name', '')
+                note = request.POST.get('note', '')
+                previous_version = form.cleaned_data.get('previous_version', '')
+                branch = form.cleaned_data.get('branch', '')
+                feedback_obj = WriteWork.objects.create(work_name=work_name, english_work_name=english_work_name,
+                                                        note=note, teacher_offer=offer,
+                                                        previous_version=previous_version)
+                feedback_obj.branch.set(branch)
+                return HttpResponseRedirect('/teacher/')
     else:
         form = NewTheme()
     return render(request, 'teacher/new_theme.html', {'form': form})
+
+
+def sendEmail(student, theme):
+    port = 465
+    smtp_server = "smtp.gmail.com"
+    sender_email = "naukma.recording@gmail.com"
+    receiver_email = User.objects.get(pk=student).email
+    password = 'naukma912'
+    message = 'Доброго дня! Щойно вашу заявку на тему "' + WriteWork.objects.get(
+        pk=theme).work_name + '" було підтверджено!'
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message.encode('utf-8', 'ignore'))
+        server.quit()

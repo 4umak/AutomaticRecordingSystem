@@ -1,6 +1,6 @@
 from django import forms
 
-from teacher.models import BranchOfKnowledge
+from teacher.models import BranchOfKnowledge, TopicOffer
 from theme.models import WriteWork
 
 
@@ -12,3 +12,6 @@ class NewTheme(forms.Form):
                                             to_field_name="branch_name")
     previous_version = forms.ModelChoiceField(queryset=WriteWork.objects.all(), required=False,
                                               to_field_name="work_name")
+    specialty = forms.ModelChoiceField(queryset=TopicOffer.objects.all().distinct(), required=True,
+                                       to_field_name="specialty__specialty__specialty_name")
+    year = forms.IntegerField(label='Рік вступу')
