@@ -5,8 +5,10 @@ from django.urls import reverse
 from authorization.authhelper import get_signin_url, get_token_from_code
 from authorization.outlookservice import get_me
 from student.models import Student
-from teacher.models import Teacher
+from teacher.models import Teacher, BranchOfKnowledge
 from methodist.models import Methodist
+import urllib.request
+from bs4 import BeautifulSoup
 
 
 def home(request):
@@ -39,11 +41,11 @@ def gettoken(request):
         mail = info['userPrincipalName']
     username = mail.split('@')[0]
     if not User.objects.filter(username=username).exists():
-        user = User.objects.create_user(username, info['mail'])
+        user = User.objects.create_user(username, mail)
         user.first_name = info['displayName']
         user.save()
     user = User.objects.get(username=username)
-    request.session['mail'] = mail#info['mail']
+    request.session['mail'] = mail  # info['mail']
     request.session['fullName'] = info['displayName']
     role = None
     if Student.objects.filter(student_id=user.id).exists():
@@ -54,4 +56,21 @@ def gettoken(request):
         role = 'methodist'
     request.session['role'] = role
     request.session['user_id'] = user.id
+    if role == 'teacher':
+        find_branches(user.id)
     return HttpResponseRedirect('../../')
+
+
+def find_branches(id):
+    quote_page = Teacher.objects.get(pk=id).google_scholar
+    if not quote_page:
+        return
+    page = urllib.request.urlopen(quote_page)
+    soup = BeautifulSoup(page, 'html.parser')
+    name_box = soup.findAll('a', attrs={'class': 'gsc_prf_inta gs_ibl'})
+    teacher = Teacher.objects.get(pk=id)
+    for n in name_box:
+        br = BranchOfKnowledge.objects.get_or_create(branch_name=n.text.strip())
+        teacher.branch.add(br[0])
+    teacher.save()
+    return

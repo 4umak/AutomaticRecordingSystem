@@ -56,7 +56,7 @@ class Protection(models.Model):
     date_of_confirmation = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.student + self.work
+        return self.speciality_group.specialty.specialty_name + "  --  " + self.teacher_department.department_name
 
 
 class BranchOfKnowledge(models.Model):
@@ -92,6 +92,9 @@ class TopicOffer(models.Model):
     year_of_work = models.SmallIntegerField(default=datetime.date.today().year)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     specialty = models.ForeignKey(StudentGroup, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.specialty.specialty.specialty_name
 
 
 class CountOfWork(models.Model):

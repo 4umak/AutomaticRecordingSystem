@@ -71,7 +71,7 @@ class ThemeListView(ListView):
             theme_id = self.request.GET.get('theme_id')
             theme = WriteWork.objects.get(pk=theme_id)
             record = Record.objects.get_or_create(student=student, work=theme, status="WAIT")
-            send_email(student, theme)
+            #send_email(student, theme)
 
         if self.request.GET.get('teacher_name') is not None:
             users = User.objects.filter(first_name__icontains=self.request.GET.get('teacher_name')) \

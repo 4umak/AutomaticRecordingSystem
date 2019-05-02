@@ -13,5 +13,5 @@ class NewTheme(forms.Form):
     previous_version = forms.ModelChoiceField(queryset=WriteWork.objects.all(), required=False,
                                               to_field_name="work_name")
     specialty = forms.ModelChoiceField(queryset=TopicOffer.objects.all().distinct(), required=True,
-                                       to_field_name="specialty__specialty__specialty_name")
+                                       to_field_name="specialty")
     year = forms.IntegerField(label='Рік вступу')

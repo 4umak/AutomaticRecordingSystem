@@ -47,7 +47,7 @@ class TeacherListView(ListView):
             work = record.work_id
             student = record.student_id
             record.status = 'CONFIRMED'
-            sendEmail(student, work)
+            #sendEmail(student, work)
             record.save()
 
             other_record_on_theme = Record.objects.all().filter(work_id=work)
