@@ -128,3 +128,7 @@ def sendEmail(student, theme):
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message.encode('utf-8', 'ignore'))
         server.quit()
+
+
+
+

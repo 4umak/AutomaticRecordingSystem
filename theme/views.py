@@ -25,7 +25,15 @@ class ThemeListView(ListView):
         context['user'] = User
         all_records = Record.objects.all()
         context['all_records'] = all_records
-        context['cathedras'] = Department.objects.all()
+        if self.request.session['role'] == 'student':
+            faculty = Student.objects.filter(student_id=self.request.session['user_id'])[
+                0].specialty.specialty.department.faculty
+            context['cathedras'] = Department.objects.filter(faculty=faculty)
+        elif self.request.session['role'] == 'teacher':
+            faculty = Teacher.objects.filter(teacher_id=self.request.session['user_id'])[0].department.faculty
+            context['cathedras'] = Department.objects.filter(faculty=faculty)
+        else:
+            context['cathedras'] = Department.objects.all()
         context['branches'] = BranchOfKnowledge.objects.all()
         context['statuses'] = dict(Record.STATUS_TITLE).values()
         if self.request.session['role'] == 'student':
@@ -71,7 +79,7 @@ class ThemeListView(ListView):
             theme_id = self.request.GET.get('theme_id')
             theme = WriteWork.objects.get(pk=theme_id)
             record = Record.objects.get_or_create(student=student, work=theme, status="WAIT")
-            #send_email(student, theme)
+            # send_email(student, theme)
 
         if self.request.GET.get('teacher_name') is not None:
             users = User.objects.filter(first_name__icontains=self.request.GET.get('teacher_name')) \

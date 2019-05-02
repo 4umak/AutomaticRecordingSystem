@@ -15,11 +15,9 @@
                             {{ message }}
                         {% endif %}
                     {% endif %}
-                    {% if protection %}
-                        {{ protection.date_of_confirmation }}
-                    {% endif %}
+                    {{ protection.date_of_confirmation }}
                 </div>
-            </div>
+            </div><br>
             <div class="pre-protect-date">
                 <div class="pre-protect-info">Дата передзахисту:</div>
                 <div class="pre-protect-value">
@@ -28,9 +26,7 @@
                             {{ message }}
                         {% endif %}
                     {% endif %}
-                    {% if protection %}
-                        {{ protection.date_of_pre_protection }}
-                    {% endif %}
+                    {{ protection.date_of_pre_protection }}
                 </div>
             </div>
         {% endif %}

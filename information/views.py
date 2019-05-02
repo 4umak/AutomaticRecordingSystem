@@ -59,7 +59,7 @@ class InfoListView(ListView):
             if not protection:
                 context['message'] = "Дата ще не визначена методистом кафедри!"
                 return context
-            context['protection'] = protection
+            context['protection'] = protection[0]
         elif self.request.session['role'] == 'teacher':
             specialties = TopicOffer.objects.filter(teacher__teacher_id=self.request.session['user_id'],
                                                     year_of_work=2019)
