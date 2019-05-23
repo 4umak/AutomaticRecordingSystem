@@ -1,0 +1,76 @@
+{%  extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet/less" type="text/css" href="/static/styles/plans.less"/>
+{% endblock style %}
+
+{% block content %}
+
+<div class="mainInfo">
+    <div class="themeDescription">
+        <div class="theme tagName">Тема:</div>
+        <div class="themeName tagValue">{{ work.work_name}}</div>
+    </div>
+      {%  if request.session.role == "student" %}
+    <div class="lecturerDescription">
+        <div class="lecture tagName">Викладач:</div>
+        <div class="lecturerName tagValue">{{ work.teacher_offer.teacher.teacher_id.first_name }}</div>
+    </div>
+          {% elif  request.session.role == "teacher" %}
+          <div class="lecturerDescription">
+        <div class="lecture tagName">Студент:</div>
+        <div class="lecturerName tagValue">{{ student_record }}</div>
+    </div>
+          {% else %}
+             <div class="lecturerDescription">
+        <div class="lecture tagName">Викладач:</div>
+        <div class="lecturerName tagValue">{{ work.teacher_offer.teacher.teacher_id.first_name }}</div>
+    </div>
+          <div class="lecturerDescription">
+        <div class="lecture tagName">Студент:</div>
+        <div class="lecturerName tagValue">{{ student_record }}</div>
+    </div>
+          {% endif %}
+</div>
+<div class="line"></div>
+<div class="plan">
+<!-- point main - blue -->
+{% if protection %}
+    {% if  protection.date_of_pre_protection%}
+    <div class="point main">
+        <div class="deadline"> {{ protection.date_of_pre_protection }} </div>
+        <div class="description">Передзахист</div>
+    </div>
+        {% endif %}
+    <div class="point main">
+        <div class="deadline">{{ protection.date_of_confirmation }} </div>
+        <div class="description">Захист</div>
+    </div>
+    {% endif %}
+
+
+ {% for item in plan %}
+
+    <div class="point">
+       <div class="plan-container">
+           <div class="deadline">{{ item.deadline }} </div>
+         {%  if request.session.role == "teacher" %}
+           <form class="form_class">
+                                <button class="delete_button" name="del_item" value="{{ item.id }}"
+                                        formmethod="get"><i class="glyphicon glyphicon-remove"></i>
+                                </button>
+           </form>
+           {% endif %}
+        </div>
+        <div class="description"> {{ item.description }} </div>
+    </div>
+
+    {% endfor %}
+
+
+     {%  if request.session.role == "teacher" %}
+            <a href="/plan/{{ work.id }}/add" class="add-plan-item__button">Додати</a>
+     {% endif %}
+
+
+{% endblock content %}

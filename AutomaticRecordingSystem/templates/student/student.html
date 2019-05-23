@@ -1,0 +1,26 @@
+{%  extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet/less" type="text/css" href="/static/styles/profile.less"/>
+{% endblock style %}
+
+{% block content %}
+<section class="container plan-section">
+    <div class="profile-info">
+        <span class="profile-info__avatar"></span>
+        <div class="profile-info__list">
+            <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
+            <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
+            {% if student.average_mark %}
+            <div class="profile-info__item">Середній бал: {{ student.average_mark }}</div>
+            {% endif %}
+        {% if student.additional_email %}
+            <div class="profile-info__item">Додаткова пошта: {{ student.additional_email }}</div>
+        {% endif %}
+        </div>
+    </div>
+
+
+    </div>
+</section>
+{% endblock content %}

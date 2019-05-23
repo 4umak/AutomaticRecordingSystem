@@ -1,0 +1,25 @@
+{% load static %}
+
+<header class="header">
+    <div class="header__wrapper">
+        <div class="header__navbar navbar">
+            <div class="header__logo navbar__item"><a class="navbar__link_without_line" href="/">НаУКМА</a></div>
+        </div>
+        <div class="header__navbar navbar">
+            <div class="navbar__list">
+                <div class="navbar__item"><a class="navbar__link" href="/">Теми</a></div>
+                {%  if request.session.role == "methodist" %}
+                <div class="navbar__item"><a class="navbar__link" href="/deadline">Дедлайни </a></div>
+                {% else %}
+                <div class="navbar__item"><a class="navbar__link" href="/plan">План роботи </a></div>
+                {% endif %}
+               <div class="navbar__item"><a class="navbar__link" href="/information">Інформація</a></div>
+                <div class="navbar__item"><a class="navbar__link" href="/{{ request.session.role}}/{{ request.session.email}}">Профіль</a></div>
+            </div>
+            <div class="navbar__user-panel">
+                <button class="navbar__login"><a class="navbar__link_without_line" href="/exit">Вихід</a></button>
+                <div class="navbar__username">{{ request.session.mail}}</div>
+            </div>
+        </div>
+    </div>
+</header>

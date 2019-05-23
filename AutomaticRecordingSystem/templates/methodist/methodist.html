@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet/less" type="text/css" href="/static/styles/profile.less"/>
+{% endblock style %}
+
+{% block content %}
+    <section class="container plan-section">
+        <div class="profile-info">
+            <span class="profile-info__avatar"></span>
+            <div class="profile-info__list">
+                <div class="profile-info__item profile-info__name">{{ request.session.fullName }}</div>
+                <div class="profile-info__item profile-info__email">{{ request.session.mail }}</div>
+                <div class="profile-info__item">{{ methodist.department }}</div>
+                {% if  methodist.additional_email %}
+                    <div class="profile-info__item">{{ methodist.additional_email }}</div>
+                {% endif %}
+                <div class="profile-info__item">Кабінет: {{ methodist.office }}</div>
+                <div class="profile-info__item profile-info__room">Телефон: {{ methodist.phone }}</div>
+            </div>
+        </div>
+
+        <div>
+        <div class="new-topic-offer">
+            <form action="/methodist/" method="post">
+            {% csrf_token %}
+                <div>Викладач:</div>
+                    <select class="selectpicker" name="teacher" required="required">
+                        <option value="anything">---</option>
+                        {% for teacher in teachers %}
+                            <option value="{{ teacher.teacher_id.id }}">{{ teacher.teacher_id.first_name }}</option>
+                        {% endfor %}
+                    </select>
+                <br>
+             <div>Спеціальність:</div>
+                <select class="selectpicker" name="specialty" required="required">
+                    <option value="anything">---</option>
+                    {% for specialty in specialties %}
+                        <option value="{{ specialty.specialty_name }}">{{ specialty.specialty_name }}</option>
+                    {% endfor %}
+                </select><br>
+                <div>Рік навчання:</div>
+                <select class="selectpicker" name="year" required="required">
+                    <option value="anything">---</option>
+                    {% for year in years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select><br>
+                <div>Кількість тем:</div>
+                <input type="number" class="form-control" name="amount" min="0" required="required" style="width: 220px"><br><br>
+                <button class="themes-list__button" formmethod="get">Додати</button>
+            </form>
+        </div>
+        {% for topic in topics_offers %}
+        <div class="theme_container">
+            <div class="theme-item">
+            <div class="theme-item__header">
+                <div class="theme-item__info">
+                    {{ topic.teacher.teacher_id.first_name }} {{ topic.specialty.specialty.specialty_name }} - {{ topic.year_of_study }} | Кількість тем: {{topic.count_of_themes }}
+                </div>
+            </div>
+            </div>
+            <form class="form_class">
+                                <button class="delete_button" name="del_offer" value="{{ topic.id }}"
+                                        formmethod="get"><i class="glyphicon glyphicon-remove"></i>
+                                </button>
+            </form>
+
+
+    </div>
+  {% endfor %}
+        </div>
+
+    </section>
+{% endblock content %}

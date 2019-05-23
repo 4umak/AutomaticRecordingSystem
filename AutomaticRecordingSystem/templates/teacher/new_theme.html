@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block style %}
+    <link rel="stylesheet/less" type="text/css" href="/static/styles/profile.less"/>
+{% endblock style %}
+
+{% block content %}
+    <div class="container">
+        <form action="/teacher/new_theme" method="post">
+            {% csrf_token %}
+            <input type="text" class="form-control" placeholder="Назва" maxlength="500" name="work_name"><br><br>
+            <input type="text" class="form-control" placeholder="Назва англійською" maxlength="500"
+                   name="english_work_name"><br><br>
+            <textarea type="text" class="form-control" placeholder="Примітка" name="note"></textarea><br><br>
+            <p>Галузі:</p>
+            {{ form.branch }}<br><br>
+            <p>Попередня версія:</p>
+            {{ form.previous_version }}<br><br>
+            <p>Спеціальність:</p>
+            {{ form.specialty }}<br><br>
+             <input type="submit" class="submit_button themes-list__button" value="Створити">
+        </form>
+    </div>
+
+{% endblock content %}

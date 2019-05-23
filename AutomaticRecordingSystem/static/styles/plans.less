@@ -1,0 +1,206 @@
+@import "variables.less";
+
+@fontSize: 20px;
+@planMargin: 400px;
+.mainInfo{
+    margin: 100px @planMargin+10 10px @planMargin+10;
+}
+.themeDescription{
+    margin: 10px 0px;
+}
+.tagName, .tagValue, .plan {
+    font-family: @fontFamily;
+    font-style: @fontStyle;
+}
+.tagName{
+    line-height: normal;
+    font-size: @fontSize;
+    color: @fontColor;
+    display: inline;
+}
+.tagValue{
+    font-weight: bold;
+    line-height: normal;
+    font-size: @fontSize; 
+    color: @fontColor;
+    display: inline;
+}
+.line{
+    border-bottom: 1px solid #807979;
+    margin: 20px @planMargin+10;
+}
+.plan{
+    margin-left: @planMargin;
+    margin-right: @planMargin;
+}
+.deadline{
+    font-weight: bold;
+    line-height: normal;
+    margin: 10px;
+}
+.point{
+    margin: 10px;
+    border-radius: 4px;
+    border: 1px solid #DBDADA;
+    box-sizing: border-box
+   
+}
+.description{
+    margin: 10px 60px;
+}
+.main{
+    background-color: @backgroundBlueColor;
+    border: 2px solid #DDEAF6;
+}
+
+.plan_container{
+    margin-right: 170px;
+    margin-left: 170px;
+}
+
+.theme-item{
+      margin-bottom: 15px;
+  width:100%;
+}
+
+.theme-item:hover{
+  cursor: pointer;
+}
+
+
+.theme-item__header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px 10px 30px;
+  border-radius: 5px;
+      margin-bottom: 15px;
+  width:100%;
+    background-color: @backgroundBlueColor;
+}
+
+.theme-item__reg{
+  background-color: @secondBlueColor;
+  color: white;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 3px;
+  width: 100px;
+  text-align: center;
+}
+
+.none-plan{
+    margin-right: @marginLeftRight;
+    margin-left: @marginLeftRight;
+}
+
+.add-plan-item__button{
+    width: 140px;
+    height: 40px;
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: auto;
+    text-align: center;
+    background-color: @mainColor;
+    border: 0;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    display: block;
+    text-decoration: none;
+
+}
+
+.add-plan-item__button:hover{
+  text-decoration: none;
+  color: white;
+}
+
+.add-plan-item__button:hover:after{
+  text-decoration: none;
+  color: white;
+}
+
+.plan-container{
+  display: flex;
+}
+
+.deadline{
+  flex-basis: 95%;
+}
+
+.new-date{
+  margin-left: 170px;
+}
+
+  .delete_button{
+    width: auto;
+    height: auto;
+    padding: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+    text-align: center;
+    background-color: white;
+    border: 0;
+    color: @mainColor;
+    font-weight: bold;
+    border-radius: 5px;
+    display: flex;
+    flex-basis: 5%;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+  }
+
+    .delete_button_big{
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    margin-left: 15px;
+    text-align: center;
+    background-color: @mainColor;
+    border: 0;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    display: flex;
+    flex-basis: 5%;
+    text-align: center;
+  }
+
+.themes-list__button{
+    width: 140px;
+    height: 40px;
+    padding: 10px;
+    margin-right: auto;
+  margin-bottom: 30px;
+    text-align: center;
+    background-color: @mainColor;
+    border: 0;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    display: block;
+  text-decoration: none;
+}
+
+.theme_container{
+  display: flex;
+  margin-right: 170px;
+  margin-left: 170px;
+}
+
+.theme-item{
+    margin-bottom: 15px;
+  flex-basis: 90%;
+}
+
+.theme-item__header{
+    display: flex;
+    flex-basis: 70%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px 10px 30px;
+    background-color: #dbdbdb;
+    border-radius: 5px;
+}
